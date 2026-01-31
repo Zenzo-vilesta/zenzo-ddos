@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ZENZO MEDUSA CORE v12 (DEMO)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+html,body{
+  margin:0;background:#000;color:#00ff88;
+  font-family:Consolas,"Courier New",monospace;
+  height:100%;overflow:auto
+}
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(
+    to bottom,
+    rgba(0,255,136,.04),
+    rgba(0,255,136,.04) 1px,
+    transparent 1px,
+    transparent 3px
+  )
+}
+.wrap{padding:16px;font-size:13px;line-height:1.35;white-space:pre-wrap}
+.hdr{color:#fff}
+.sep{color:#a6ffcc}
+.g{color:#00ff88}.r{color:#ff4c4c}.y{color:#ffd84d}.w{color:#fff}
+.watermark{position:fixed;bottom:8px;right:14px;opacity:.18;letter-spacing:3px}
+button{
+  background:#000;color:#ff3b3b;border:1px solid #ff3b3b;
+  font-family:inherit;padding:4px 14px;cursor:pointer
+}
+button:hover{background:#ff3b3b;color:#000}
+button:disabled{opacity:.6;cursor:not-allowed}
+input.targetInput{
+  background:#000;color:#00ff88;border:1px solid #00ff88;
+  font-family:inherit;width:280px;outline:none;padding:2px
+}
+#audioInit{
+  position:fixed;inset:0;background:#000;color:#00ff88;
+  display:flex;align-items:center;justify-content:center;
+  z-index:9999;cursor:pointer
+}
+</style>
+</head>
+<body>
+
+<!-- AUDIO -->
+<audio id="bgm" loop>
+  <source src="https://files.catbox.moe/xwll7m.mp4" type="audio/mp4">
+</audio>
+
+<!-- AUDIO INIT -->
+<div id="audioInit">[ Zenzo DDoS ]</div>
+
+<div class="wrap" id="ui">
+<span class="hdr">
+ZENZO MEDUSA CORE v12
+</span>
+
+__  /  __|   \ | __  /   _ \  
+   /   _|   .  |    /   (   | 
+____| ___| _|\_| ____| \___/  
+
+<span class="sep">------------------------------------------------------------</span>
+<span class="y">Mode      :</span> <span class="r">FORCE</span>
+<span class="y">Duration  :</span> <span class="g">∞</span>
+<span class="y">Rate      :</span> <span class="g">ADAPTIVE</span>
+<span class="y">Thread    :</span> <span class="g">DYNAMIC</span>
+<span class="sep">------------------------------------------------------------</span>
+<span class="y">-></span> Link :
+<input id="target" class="targetInput" placeholder="https://example.com">
+<span class="sep">------------------------------------------------------------</span>
+
+root@zenzo:~# <button id="run">START ATTACK</button>
+</div>
+
+<div class="watermark">ZENZO</div>
+
+<script>
+const audio = document.getElementById('bgm');
+const init  = document.getElementById('audioInit');
+const ui    = document.getElementById('ui');
+const run   = document.getElementById('run');
+const targetInput = document.getElementById('target');
+
+function startAudio(){
+  audio.play();
+  init.style.display="none";
+}
+init.onclick = startAudio;
+document.addEventListener("keydown",e=>{
+  if(e.key==="Enter") startAudio();
+});
+
+function ts(){
+  const d=new Date();
+  return "("+d.toLocaleTimeString()+")";
+}
+
+run.onclick = ()=>{
+  const target = targetInput.value || "UNKNOWN";
+  run.disabled = true;
+  run.textContent = "ATTACKING…";
+
+  const logs = [
+    "[Medusa] "+ts()+" Target locked : "+target,
+    "[Medusa] "+ts()+" Engine       : MEDUSA CORE v12",
+    "[Medusa] "+ts()+" Mode         : FORCE",
+    "[Medusa] "+ts()+" Thread Pool  : DYNAMIC",
+    "[Medusa] "+ts()+" Rate Control : ADAPTIVE",
+    "[Medusa] "+ts()+" Attack Thread 1 Started",
+    "[Medusa] "+ts()+" Attack Thread 2 Started",
+    "[Medusa] "+ts()+" Attack Thread 3 Started",
+    "[Medusa] "+ts()+" Attack Thread 4 Started",
+    "[Medusa] "+ts()+" <span class='y'>FORCE MODE ENABLED</span>",
+    "[Medusa] "+ts()+" <span class='r'>Request timed out</span>",
+    "[Medusa] "+ts()+" <span class='r'>Request timed out</span>",
+    "[Medusa] "+ts()+" <span class='y'>Attack threads running (∞)</span>"
+  ];
+
+  let i=0;
+  const iv = setInterval(()=>{
+    ui.innerHTML += "\n" + logs[i++];
+    window.scrollTo(0, document.body.scrollHeight);
+    if(i>=logs.length) clearInterval(iv);
+  }, 650);
+};
+</script>
+
+</body>
+</html>
